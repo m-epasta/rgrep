@@ -1,0 +1,807 @@
+
+remote: Running tests on your code. Logs should appear shortly...
+remote: 
+remote: [compile]    Compiling codecrafters-grep v0.1.0 (/app)
+remote: [compile]     Finished `release` profile [optimized] target(s) in 1.80s
+remote: [compile] Moved ./.codecrafters/run.sh → ./your_program.sh
+remote: [compile] Compilation successful.
+remote: 
+remote: [tester::#XE5] Running tests for Stage #XE5 (Backreferences - Nested Backreferences)
+remote: [tester::#XE5] $ echo -n '"cat and cat" is the same as "cat and cat"' | ./your_program.sh -E '("(cat) and \2") is the same as \1'                                                                 
+remote: [your_program] "cat and cat" is the same as "cat and cat"
+remote: [tester::#XE5] ✓ Received exit code 0.
+remote: [tester::#XE5] $ echo -n '"cat and cat" is the same as "cat and dog"' | ./your_program.sh -E '("(cat) and \2") is the same as \1'                                                                 
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n 'grep 101 is doing grep 101 times, and again grep 101 times' | ./your_program.sh -E '((\w\w\w\w) (\d\d\d)) is doing \2 \3 times, and again \1 times'                     
+remote: [your_program] grep 101 is doing grep 101 times, and again grep 101 times
+remote: [tester::#XE5] ✓ Received exit code 0.
+remote: [tester::#XE5] $ echo -n '$?! 101 is doing $?! 101 times, and again $?! 101 times' | ./your_program.sh -E '((\w\w\w) (\d\d\d)) is doing \2 \3 times, and again \1 times'                          
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n 'grep yes is doing grep yes times, and again grep yes times' | ./your_program.sh -E '((\w\w\w\w) (\d\d\d)) is doing \2 \3 times, and again \1 times'                     
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n 'abc-def is abc-def, not efg, abc, or def' | ./your_program.sh -E '(([abc]+)-([def]+)) is \1, not ([^xyz]+), \2, or \3'                                                  
+remote: [your_program] abc-def is abc-def, not efg, abc, or def
+remote: [tester::#XE5] ✓ Received exit code 0.
+remote: [tester::#XE5] $ echo -n 'efg-hij is efg-hij, not klm, efg, or hij' | ./your_program.sh -E '(([abc]+)-([def]+)) is \1, not ([^xyz]+), \2, or \3'                                                  
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n 'abc-def is abc-def, not xyz, abc, or def' | ./your_program.sh -E '(([abc]+)-([def]+)) is \1, not ([^xyz]+), \2, or \3'                                                  
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n 'apple pie is made of apple and pie. love apple pie' | ./your_program.sh -E '^((\w+) (\w+)) is made of \2 and \3. love \1$'                                              
+remote: [your_program] apple pie is made of apple and pie. love apple pie
+remote: [tester::#XE5] ✓ Received exit code 0.
+remote: [tester::#XE5] $ echo -n 'pineapple pie is made of apple and pie. love apple pie' | ./your_program.sh -E '^((apple) (\w+)) is made of \2 and \3. love \1$'                                        
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n 'apple pie is made of apple and pie. love apple pies' | ./your_program.sh -E '^((\w+) (pie)) is made of \2 and \3. love \1$'                                             
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n '"howwdy hey there" is made up of "howwdy" and "hey". howwdy hey there' | ./your_program.sh -E '"((how+dy) (he?y) there)" is made up of "\2" and "\3". \1'               
+remote: [your_program] "howwdy hey there" is made up of "howwdy" and "hey". howwdy hey there
+remote: [tester::#XE5] ✓ Received exit code 0.
+remote: [tester::#XE5] $ echo -n '"hody hey there" is made up of "hody" and "hey". hody hey there' | ./your_program.sh -E '"((how+dy) (he?y) there)" is made up of "\2" and "\3". \1'                     
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n '"howwdy heeey there" is made up of "howwdy" and "heeey". howwdy heeey there' | ./your_program.sh -E '"((how+dy) (he?y) there)" is made up of "\2" and "\3". \1'         
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] $ echo -n 'cat and fish, cat with fish, cat and fish' | ./your_program.sh -E '((c.t|d.g) and (f..h|b..d)), \2 with \3, \1'                                                         
+remote: [your_program] cat and fish, cat with fish, cat and fish
+remote: [tester::#XE5] ✓ Received exit code 0.
+remote: [tester::#XE5] $ echo -n 'bat and fish, bat with fish, bat and fish' | ./your_program.sh -E '((c.t|d.g) and (f..h|b..d)), \2 with \3, \1'                                                         
+remote: [tester::#XE5] ✓ Received exit code 1.
+remote: [tester::#XE5] Test passed.
+remote: 
+remote: [tester::#TG1] Running tests for Stage #TG1 (Backreferences - Multiple Backreferences)
+remote: [tester::#TG1] $ echo -n '3 red squares and 3 red circles' | ./your_program.sh -E '(\d+) (\w+) squares and \1 \2 circles'                                                                         
+remote: [your_program] 3 red squares and 3 red circles
+remote: [tester::#TG1] ✓ Received exit code 0.
+remote: [tester::#TG1] $ echo -n '3 red squares and 4 red circles' | ./your_program.sh -E '(\d+) (\w+) squares and \1 \2 circles'                                                                         
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'grep 101 is doing grep 101 times' | ./your_program.sh -E '(\w\w\w\w) (\d\d\d) is doing \1 \2 times'                                                                     
+remote: [your_program] grep 101 is doing grep 101 times
+remote: [tester::#TG1] ✓ Received exit code 0.
+remote: [tester::#TG1] $ echo -n '$?! 101 is doing $?! 101 times' | ./your_program.sh -E '(\w\w\w) (\d\d\d) is doing \1 \2 times'                                                                         
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'grep yes is doing grep yes times' | ./your_program.sh -E '(\w\w\w\w) (\d\d\d) is doing \1 \2 times'                                                                     
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'abc-def is abc-def, not efg' | ./your_program.sh -E '([abc]+)-([def]+) is \1-\2, not [^xyz]+'                                                                          
+remote: [your_program] abc-def is abc-def, not efg
+remote: [tester::#TG1] ✓ Received exit code 0.
+remote: [tester::#TG1] $ echo -n 'efg-hij is efg-hij, not efg' | ./your_program.sh -E '([abc]+)-([def]+) is \1-\2, not [^xyz]+'                                                                           
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'abc-def is abc-def, not xyz' | ./your_program.sh -E '([abc]+)-([def]+) is \1-\2, not [^xyz]+'                                                                           
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'apple pie, apple and pie' | ./your_program.sh -E '^(\w+) (\w+), \1 and \2$'                                                                                             
+remote: [your_program] apple pie, apple and pie
+remote: [tester::#TG1] ✓ Received exit code 0.
+remote: [tester::#TG1] $ echo -n 'pineapple pie, pineapple and pie' | ./your_program.sh -E '^(apple) (\w+), \1 and \2$'                                                                                   
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'apple pie, apple and pies' | ./your_program.sh -E '^(\w+) (pie), \1 and \2$'                                                                                            
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'howwdy hey there, howwdy hey' | ./your_program.sh -E '(how+dy) (he?y) there, \1 \2'                                                                                     
+remote: [your_program] howwdy hey there, howwdy hey
+remote: [tester::#TG1] ✓ Received exit code 0.
+remote: [tester::#TG1] $ echo -n 'hody hey there, howwdy hey' | ./your_program.sh -E '(how+dy) (he?y) there, \1 \2'                                                                                       
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'howwdy heeey there, howwdy heeey' | ./your_program.sh -E '(how+dy) (he?y) there, \1 \2'                                                                                 
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] $ echo -n 'cat and fish, cat with fish' | ./your_program.sh -E '(c.t|d.g) and (f..h|b..d), \1 with \2'                                                                             
+remote: [your_program] cat and fish, cat with fish
+remote: [tester::#TG1] ✓ Received exit code 0.
+remote: [tester::#TG1] $ echo -n 'bat and fish, cat with fish' | ./your_program.sh -E '(c.t|d.g) and (f..h|b..d), \1 with \2'                                                                             
+remote: [tester::#TG1] ✓ Received exit code 1.
+remote: [tester::#TG1] Test passed.
+remote: 
+remote: [tester::#SB5] Running tests for Stage #SB5 (Backreferences - Single Backreference)
+remote: [tester::#SB5] $ echo -n 'cat and cat' | ./your_program.sh -E '(cat) and \1'
+remote: [your_program] cat and cat
+remote: [tester::#SB5] ✓ Received exit code 0.
+remote: [tester::#SB5] $ echo -n 'cat and dog' | ./your_program.sh -E '(cat) and \1'
+remote: [tester::#SB5] ✓ Received exit code 1.
+remote: [tester::#SB5] $ echo -n 'cat and cat' | ./your_program.sh -E '(\w+) and \1'
+remote: [your_program] cat and cat
+remote: [tester::#SB5] ✓ Received exit code 0.
+remote: [tester::#SB5] $ echo -n 'cat and dog' | ./your_program.sh -E '(\w+) and \1'
+remote: [tester::#SB5] ✓ Received exit code 1.
+remote: [tester::#SB5] $ echo -n 'cat is cat, not dog' | ./your_program.sh -E '^([act]+) is \1, not [^xyz]+$'                                                                                             
+remote: [your_program] cat is cat, not dog
+remote: [tester::#SB5] ✓ Received exit code 0.
+remote: [tester::#SB5] $ echo -n 'cat is c@t, not d0g' | ./your_program.sh -E '^([act]+) is \1, not [^xyz]+$'                                                                                             
+remote: [tester::#SB5] ✓ Received exit code 1.
+remote: [tester::#SB5] Test passed.
+remote: 
+remote: [tester::#UG0] Running tests for Stage #UG0 (Quantifiers - Match between n and m times)
+remote: [tester::#UG0] $ echo -n 'cornn_soup' | ./your_program.sh -E 'corn{2,4}_soup'
+remote: [your_program] cornn_soup
+remote: [tester::#UG0] ✓ Received exit code 0.
+remote: [tester::#UG0] $ echo -n 'corn_soup' | ./your_program.sh -E 'corn{2,4}_soup'
+remote: [tester::#UG0] ✓ Received exit code 1.
+remote: [tester::#UG0] $ echo -n 'cornnnnn_soup' | ./your_program.sh -E 'corn{2,4}_soup'
+remote: [tester::#UG0] ✓ Received exit code 1.
+remote: [tester::#UG0] $ echo -n 'panda494' | ./your_program.sh -E 'panda\d{2,4}'
+remote: [your_program] panda494
+remote: [tester::#UG0] ✓ Received exit code 0.
+remote: [tester::#UG0] $ echo -n 'watermelon,_ab' | ./your_program.sh -E 'watermelon,\w{1,3}'
+remote: [your_program] watermelon,_ab
+remote: [tester::#UG0] ✓ Received exit code 0.
+remote: [tester::#UG0] $ echo -n 'foxpandatiger' | ./your_program.sh -E '(panda|tiger|fox){2,3}'
+remote: [your_program] foxpandatiger
+remote: [tester::#UG0] ✓ Received exit code 0.
+remote: [tester::#UG0] $ echo -n 'strawberryaei' | ./your_program.sh -E 'strawberry[aeiou]{2,4}'
+remote: [your_program] strawberryaei
+remote: [tester::#UG0] ✓ Received exit code 0.
+remote: [tester::#UG0] $ echo -n '2021-2-2 6:25 LOG INFO device_registered' | ./your_program.sh -E '^\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2} LOG (INFO|DEBUG) \w+$'                                         
+remote: [your_program] 2021-2-2 6:25 LOG INFO device_registered
+remote: [tester::#UG0] ✓ Received exit code 0.
+remote: [tester::#UG0] $ echo -n '19:6:25:4 WARN INFO session_validated' | ./your_program.sh -E '^\d{1,2}:\d{1,2}:\d{1,2}:\d{2,3} LOG (INFO|DEBUG) \w+$'                                                  
+remote: [tester::#UG0] ✓ Received exit code 1.
+remote: [tester::#UG0] Test passed.
+remote: 
+remote: [tester::#HK3] Running tests for Stage #HK3 (Quantifiers - Match at least n times)
+remote: [tester::#HK3] $ echo -n 'cherryyy' | ./your_program.sh -E 'cherryy{2,}'
+remote: [your_program] cherryyy
+remote: [tester::#HK3] ✓ Received exit code 0.
+remote: [tester::#HK3] $ echo -n 'cherryyyyy' | ./your_program.sh -E 'cherryy{2,}'
+remote: [your_program] cherryyyyy
+remote: [tester::#HK3] ✓ Received exit code 0.
+remote: [tester::#HK3] $ echo -n 'elephant1898' | ./your_program.sh -E 'elephant\d{3,}'
+remote: [your_program] elephant1898
+remote: [tester::#HK3] ✓ Received exit code 0.
+remote: [tester::#HK3] $ echo -n 'tomato,_tag' | ./your_program.sh -E 'tomato,\w{2,}'
+remote: [your_program] tomato,_tag
+remote: [tester::#HK3] ✓ Received exit code 0.
+remote: [tester::#HK3] $ echo -n 'pumpkintomatospinachpumpkin' | ./your_program.sh -E '(tomato|spinach|pumpkin){3,}'                                                                                      
+remote: [your_program] pumpkintomatospinachpumpkin
+remote: [tester::#HK3] ✓ Received exit code 0.
+remote: [tester::#HK3] $ echo -n '16:46 LOG DEBUG token_created' | ./your_program.sh -E '^\d{2}:\d{2} LOG \w{3,} \w+$'                                                                                    
+remote: [your_program] 16:46 LOG DEBUG token_created
+remote: [tester::#HK3] ✓ Received exit code 0.
+remote: [tester::#HK3] $ echo -n '22:55 LOG OK device_registered' | ./your_program.sh -E '^\d{2}:\d{2} LOG \w{3,} \w+$'                                                                                   
+remote: [tester::#HK3] ✓ Received exit code 1.
+remote: [tester::#HK3] Test passed.
+remote: 
+remote: [tester::#WY9] Running tests for Stage #WY9 (Quantifiers - Match exactly n times)
+remote: [tester::#WY9] $ echo -n 'bananaaa' | ./your_program.sh -E 'bananaa{2}'
+remote: [your_program] bananaaa
+remote: [tester::#WY9] ✓ Received exit code 0.
+remote: [tester::#WY9] $ echo -n 'monkey784' | ./your_program.sh -E 'monkey\d{3}'
+remote: [your_program] monkey784
+remote: [tester::#WY9] ✓ Received exit code 0.
+remote: [tester::#WY9] $ echo -n 'pumpkin,_hi' | ./your_program.sh -E 'pumpkin,\w{4}'
+remote: [tester::#WY9] ✓ Received exit code 1.
+remote: [tester::#WY9] $ echo -n 'elephantmonkey' | ./your_program.sh -E '(monkey|elephant){2}'
+remote: [your_program] elephantmonkey
+remote: [tester::#WY9] ✓ Received exit code 0.
+remote: [tester::#WY9] $ echo -n 'bananauoi' | ./your_program.sh -E 'banana[aeiou]{3}'
+remote: [your_program] bananauoi
+remote: [tester::#WY9] ✓ Received exit code 0.
+remote: [tester::#WY9] $ echo -n '2021-06-05 11:48 banana' | ./your_program.sh -E '^\d{4}-\d{2}-\d{2} \d{2}:\d{2} (banana|pumpkin)$'                                                                      
+remote: [your_program] 2021-06-05 11:48 banana
+remote: [tester::#WY9] ✓ Received exit code 0.
+remote: [tester::#WY9] $ echo -n '2022-1-7 18:3 banana' | ./your_program.sh -E '^\d{4}-\d{2}-\d{2} \d{2}:\d{2} (banana|pumpkin)$'                                                                         
+remote: [tester::#WY9] ✓ Received exit code 1.
+remote: [tester::#WY9] Test passed.
+remote: 
+remote: [tester::#AI9] Running tests for Stage #AI9 (Quantifiers - Match zero or more times)
+remote: [tester::#AI9] $ echo -n 'strawberry' | ./your_program.sh -E 'strawberry*'
+remote: [your_program] strawberry
+remote: [tester::#AI9] ✓ Received exit code 0.
+remote: [tester::#AI9] $ echo -n 'strawberr' | ./your_program.sh -E 'strawberry*'
+remote: [your_program] strawberr
+remote: [tester::#AI9] ✓ Received exit code 0.
+remote: [tester::#AI9] $ echo -n 'giraffe38monkey' | ./your_program.sh -E 'giraffe\d*monkey'
+remote: [your_program] giraffe38monkey
+remote: [tester::#AI9] ✓ Received exit code 0.
+remote: [tester::#AI9] $ echo -n 'corn,_fresh' | ./your_program.sh -E 'corn,\w*'
+remote: [your_program] corn,_fresh
+remote: [tester::#AI9] ✓ Received exit code 0.
+remote: [tester::#AI9] $ echo -n 'monkeygiraffegiraffemonkey' | ./your_program.sh -E '(giraffe|monkey)*'                                                                                                  
+remote: [your_program] monkeygiraffegiraffemonkey
+remote: [tester::#AI9] ✓ Received exit code 0.
+remote: [tester::#AI9] $ echo -n 'LOG INFO 93 strawberry' | ./your_program.sh -E '^LOG [FION]* \d+ (strawberry|corn)$'                                                                                    
+remote: [your_program] LOG INFO 93 strawberry
+remote: [tester::#AI9] ✓ Received exit code 0.
+remote: [tester::#AI9] $ echo -n 'LOG info 95 strawberry' | ./your_program.sh -E '^LOG [FION]* \d+ (strawberry|corn)$'                                                                                    
+remote: [tester::#AI9] ✓ Received exit code 1.
+remote: [tester::#AI9] Test passed.
+remote: 
+remote: [tester::#YX6] Running tests for Stage #YX6 (File Search - Recursive search)
+remote: [tester::#YX6] [setup] echo "mango" > "dir/fruits-2149.txt"
+remote: [tester::#YX6] [setup] echo "pear" >> "dir/fruits-2149.txt"
+remote: [tester::#YX6] [setup] echo "broccoli" > "dir/subdir/vegetables-5068.txt"
+remote: [tester::#YX6] [setup] echo "celery" >> "dir/subdir/vegetables-5068.txt"
+remote: [tester::#YX6] [setup] echo "cauliflower" >> "dir/subdir/vegetables-5068.txt"
+remote: [tester::#YX6] [setup] echo "asparagus" > "dir/vegetables-2091.txt"
+remote: [tester::#YX6] [setup] echo "spinach" >> "dir/vegetables-2091.txt"
+remote: [tester::#YX6] [setup] echo "cucumber" >> "dir/vegetables-2091.txt"
+remote: [tester::#YX6] $ ./your_program.sh -r -E .+er dir/
+remote: [your_program] dir/vegetables-2091.txt:cucumber
+remote: [your_program] dir/subdir/vegetables-5068.txt:celery
+remote: [your_program] dir/subdir/vegetables-5068.txt:cauliflower
+remote: [tester::#YX6] ✓ Received exit code 0.
+remote: [tester::#YX6] ✓ Stdout contains 3 expected lines
+remote: [tester::#YX6] $ ./your_program.sh -r -E .+ar dir/
+remote: [your_program] dir/fruits-2149.txt:pear
+remote: [your_program] dir/vegetables-2091.txt:asparagus
+remote: [tester::#YX6] ✓ Received exit code 0.
+remote: [tester::#YX6] ✓ Stdout contains 2 expected lines
+remote: [tester::#YX6] $ ./your_program.sh -r -E missing_fruit_mango dir/
+remote: [tester::#YX6] ✓ Received exit code 1.
+remote: [tester::#YX6] ✓ No output found
+remote: [tester::#YX6] Test passed.
+remote: 
+remote: [tester::#IS6] Running tests for Stage #IS6 (File Search - Search multiple files)
+remote: [tester::#IS6] [setup] echo "plum" > "fruits-4015.txt"
+remote: [tester::#IS6] [setup] echo "blackberry" >> "fruits-4015.txt"
+remote: [tester::#IS6] [setup] echo "spinach" > "vegetables-1831.txt"
+remote: [tester::#IS6] [setup] echo "pumpkin" >> "vegetables-1831.txt"
+remote: [tester::#IS6] $ ./your_program.sh -E pl.+$ fruits-4015.txt vegetables-1831.txt
+remote: [your_program] fruits-4015.txt:plum
+remote: [tester::#IS6] ✓ Received exit code 0.
+remote: [tester::#IS6] ✓ Stdout contains 1 expected line
+remote: [tester::#IS6] $ ./your_program.sh -E missing_vegetable_spinach fruits-4015.txt vegetables-1831.txt                                                                                               
+remote: [tester::#IS6] ✓ Received exit code 1.
+remote: [tester::#IS6] ✓ No output found
+remote: [tester::#IS6] $ ./your_program.sh -E spinach fruits-4015.txt vegetables-1831.txt
+remote: [your_program] vegetables-1831.txt:spinach
+remote: [tester::#IS6] ✓ Received exit code 0.
+remote: [tester::#IS6] ✓ Stdout contains 1 expected line
+remote: [tester::#IS6] Test passed.
+remote: 
+remote: [tester::#OL9] Running tests for Stage #OL9 (File Search - Search a multi-line file)
+remote: [tester::#OL9] [setup] echo "watermelon" > "fruits-5367.txt"
+remote: [tester::#OL9] [setup] echo "blueberry" >> "fruits-5367.txt"
+remote: [tester::#OL9] [setup] echo "blueberry" >> "fruits-5367.txt"
+remote: [tester::#OL9] [setup] echo "strawberry" >> "fruits-5367.txt"
+remote: [tester::#OL9] $ ./your_program.sh -E .+berry fruits-5367.txt
+remote: [your_program] blueberry
+remote: [your_program] blueberry
+remote: [your_program] strawberry
+remote: [tester::#OL9] ✓ Received exit code 0.
+remote: [tester::#OL9] ✓ Stdout contains 3 expected lines
+remote: [tester::#OL9] $ ./your_program.sh -E missing_vegetable_lettuce fruits-5367.txt
+remote: [tester::#OL9] ✓ Received exit code 1.
+remote: [tester::#OL9] ✓ No output found
+remote: [tester::#OL9] $ ./your_program.sh -E watermelon fruits-5367.txt
+remote: [your_program] watermelon
+remote: [tester::#OL9] ✓ Received exit code 0.
+remote: [tester::#OL9] ✓ Stdout contains 1 expected line
+remote: [tester::#OL9] Test passed.
+remote: 
+remote: [tester::#DR5] Running tests for Stage #DR5 (File Search - Search a single-line file)
+remote: [tester::#DR5] [setup] echo "lemon" > "fruits-6268.txt"
+remote: [tester::#DR5] $ ./your_program.sh -E le.+ fruits-6268.txt
+remote: [your_program] lemon
+remote: [tester::#DR5] ✓ Received exit code 0.
+remote: [tester::#DR5] ✓ Stdout contains 1 expected line
+remote: [tester::#DR5] $ ./your_program.sh -E missing_fruit_lemon fruits-6268.txt
+remote: [tester::#DR5] ✓ Received exit code 1.
+remote: [tester::#DR5] ✓ No output found
+remote: [tester::#DR5] $ ./your_program.sh -E .+mon fruits-6268.txt
+remote: [your_program] lemon
+remote: [tester::#DR5] ✓ Received exit code 0.
+remote: [tester::#DR5] ✓ Stdout contains 1 expected line
+remote: [tester::#DR5] Test passed.
+remote: 
+remote: [tester::#NA5] Running tests for Stage #NA5 (Highlighting - Implement the auto color option)
+remote: [tester::#NA5] $ echo -ne "plum" | ./your_program.sh --color=always -E '\w+' | cat
+remote: [your_program] plum
+remote: [tester::#NA5] ✓ Received exit code 0.
+remote: [tester::#NA5] ✓ Found line "plum"
+remote: [tester::#NA5] ✓ All matches in the line "plum" are highlighted
+remote: [tester::#NA5] $ echo -ne "horse in the wild\ngiraffe in the air" | ./your_program.sh --color=always -E '(horse|giraffe)'                                                                         
+remote: 
+remote: 
+remote: [tester::#NA5] ✓ Received exit code 0.
+remote: [tester::#NA5] ✓ Found line "horse in the wild"
+remote: [tester::#NA5] ✓ Found line "giraffe in the air"
+remote: [tester::#NA5] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#NA5] ✓ All matches in the line "horse in the wild" are highlighted
+remote: [tester::#NA5] ✓ All matches in the line "giraffe in the air" are highlighted
+remote: [tester::#NA5] $ echo -ne "123pineapple" | ./your_program.sh --color=never -E '\d+' | cat
+remote: [your_program] 123pineapple
+remote: [tester::#NA5] ✓ Received exit code 0.
+remote: [tester::#NA5] ✓ Found line "123pineapple"
+remote: [tester::#NA5] ✓ Line "123pineapple" is not highlighted
+remote: [tester::#NA5] $ echo -ne "I love plum" | ./your_program.sh --color=never -E 'plum' 
+remote: 
+remote: [tester::#NA5] ✓ Received exit code 0.
+remote: [tester::#NA5] ✓ Found line "I love plum"
+remote: [tester::#NA5] ✓ Line "I love plum" is not highlighted
+remote: [tester::#NA5] $ echo -ne "prefix_strawberry" | ./your_program.sh --color=auto -E 'strawberry$' | cat                                                                                             
+remote: [your_program] prefix_strawberry
+remote: [tester::#NA5] ✓ Received exit code 0.
+remote: [tester::#NA5] ✓ Found line "prefix_strawberry"
+remote: [tester::#NA5] ✓ Line "prefix_strawberry" is not highlighted
+remote: [tester::#NA5] $ echo -ne "The giraffe runs fast" | ./your_program.sh --color=auto -E 'giraffe'                                                                                                   
+remote: 
+remote: [tester::#NA5] ✓ Received exit code 0.
+remote: [tester::#NA5] ✓ Found line "The giraffe runs fast"
+remote: [tester::#NA5] ✓ All matches in the line "The giraffe runs fast" are highlighted
+remote: [tester::#NA5] $ echo -ne "no numbers here" | ./your_program.sh --color=auto -E '\d' 
+remote: [tester::#NA5] ✓ Received exit code 1.
+remote: [tester::#NA5] ✓ No output found
+remote: [tester::#NA5] Test passed.
+remote: 
+remote: [tester::#JK4] Running tests for Stage #JK4 (Highlighting - Disable highlighting)
+remote: [tester::#JK4] $ echo -ne "1elephant" | ./your_program.sh --color=never -E '\d' | cat
+remote: [your_program] 1elephant
+remote: [tester::#JK4] ✓ Received exit code 0.
+remote: [tester::#JK4] ✓ Found line "1elephant"
+remote: [tester::#JK4] ✓ Line "1elephant" is not highlighted
+remote: [tester::#JK4] $ echo -ne "lion" | ./your_program.sh --color=never -E '\d' | cat
+remote: [tester::#JK4] ✓ Received exit code 1.
+remote: [tester::#JK4] ✓ No output found
+remote: [tester::#JK4] $ echo -ne "pear_suffix" | ./your_program.sh --color=never -E '^pear' | cat
+remote: [your_program] pear_suffix
+remote: [tester::#JK4] ✓ Received exit code 0.
+remote: [tester::#JK4] ✓ Found line "pear_suffix"
+remote: [tester::#JK4] ✓ Line "pear_suffix" is not highlighted
+remote: [tester::#JK4] $ echo -ne "prefix_grape" | ./your_program.sh --color=never -E '^grape' | cat
+remote: [tester::#JK4] ✓ Received exit code 1.
+remote: [tester::#JK4] ✓ No output found
+remote: [tester::#JK4] $ echo -ne "doooog" | ./your_program.sh --color=never -E 'do+g' | cat
+remote: [your_program] doooog
+remote: [tester::#JK4] ✓ Received exit code 0.
+remote: [tester::#JK4] ✓ Found line "doooog"
+remote: [tester::#JK4] ✓ Line "doooog" is not highlighted
+remote: [tester::#JK4] $ echo -ne "It's raining elephant and lion\nIt's raining lion and elephant" | ./your_program.sh --color=never -E '(elephant|lion)' | cat                                          
+remote: [your_program] It's raining elephant and lion
+remote: [your_program] It's raining lion and elephant
+remote: [tester::#JK4] ✓ Received exit code 0.
+remote: [tester::#JK4] ✓ Found line "It's raining elephant and lion"
+remote: [tester::#JK4] ✓ Found line "It's raining lion and elephant"
+remote: [tester::#JK4] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#JK4] ✓ Line "It's raining elephant and lion" is not highlighted
+remote: [tester::#JK4] ✓ Line "It's raining lion and elephant" is not highlighted
+remote: [tester::#JK4] Test passed.
+remote: 
+remote: [tester::#WG2] Running tests for Stage #WG2 (Highlighting - Highlight matches in multiple lines)                                                                                                  
+remote: [tester::#WG2] $ echo -ne "a1b2c3\nno digits here\n456def" | ./your_program.sh --color=always -E '\d' | cat                                                                                       
+remote: [your_program] a1b2c3
+remote: [your_program] 456def
+remote: [tester::#WG2] ✓ Received exit code 0.
+remote: [tester::#WG2] ✓ Found line "a1b2c3"
+remote: [tester::#WG2] ✓ Found line "456def"
+remote: [tester::#WG2] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#WG2] ✓ All matches in the line "a1b2c3" are highlighted
+remote: [tester::#WG2] ✓ All matches in the line "456def" are highlighted
+remote: [tester::#WG2] $ echo -ne "horse_cat_rabbit\nno_animal_here\ncat and rabbit" | ./your_program.sh --color=always -E '(cat|rabbit|horse)' | cat                                                     
+remote: [your_program] horse_cat_rabbit
+remote: [your_program] cat and rabbit
+remote: [tester::#WG2] ✓ Received exit code 0.
+remote: [tester::#WG2] ✓ Found line "horse_cat_rabbit"
+remote: [tester::#WG2] ✓ Found line "cat and rabbit"
+remote: [tester::#WG2] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#WG2] ✓ All matches in the line "horse_cat_rabbit" are highlighted
+remote: [tester::#WG2] ✓ All matches in the line "cat and rabbit" are highlighted
+remote: [tester::#WG2] $ echo -ne "apple\ncat\npotato" | ./your_program.sh --color=always -E '\d' | cat                                                                                                   
+remote: [tester::#WG2] ✓ Received exit code 1.
+remote: [tester::#WG2] ✓ No output found
+remote: [tester::#WG2] $ echo -ne "xxyyzz\nab cd ef\nbanana" | ./your_program.sh --color=always -E '\w\w' | cat                                                                                           
+remote: [your_program] xxyyzz
+remote: [your_program] ab cd ef
+remote: [your_program] banana
+remote: [tester::#WG2] ✓ Received exit code 0.
+remote: [tester::#WG2] ✓ Found line "xxyyzz"
+remote: [tester::#WG2] ✓ Found line "ab cd ef"
+remote: [tester::#WG2] ✓ Found line "banana"
+remote: [tester::#WG2] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#WG2] ✓ All matches in the line "xxyyzz" are highlighted
+remote: [tester::#WG2] ✓ All matches in the line "ab cd ef" are highlighted
+remote: [tester::#WG2] ✓ All matches in the line "banana" are highlighted
+remote: [tester::#WG2] $ echo -ne "$$##@@\n!@#$%^\n+++---" | ./your_program.sh --color=always -E '\w' | cat                                                                                               
+remote: [tester::#WG2] ✓ Received exit code 1.
+remote: [tester::#WG2] ✓ No output found
+remote: [tester::#WG2] $ echo -ne "I see 3 peas. Also, I see 4 potatos.\nI ate 10 potato today" | ./your_program.sh --color=always -E 'I see \d+ (potato|pea)s?' | cat                                    
+remote: [your_program] I see 3 peas. Also, I see 4 potatos.
+remote: [tester::#WG2] ✓ Received exit code 0.
+remote: [tester::#WG2] ✓ Found line "I see 3 peas. Also, I see 4 potatos."
+remote: [tester::#WG2] ✓ All matches in the line "I see 3 peas. Also, I see 4 potatos." are highlighted                                                                                                   
+remote: [tester::#WG2] Test passed.
+remote: 
+remote: [tester::#EQ0] Running tests for Stage #EQ0 (Highlighting - Highlight multiple matches)
+remote: [tester::#EQ0] $ echo -ne "a1b2c3" | ./your_program.sh --color=always -E '\d' | cat
+remote: [your_program] a1b2c3
+remote: [tester::#EQ0] ✓ Received exit code 0.
+remote: [tester::#EQ0] ✓ Found line "a1b2c3"
+remote: [tester::#EQ0] ✓ All matches in the line "a1b2c3" are highlighted
+remote: [tester::#EQ0] $ echo -ne "horse_wolf_dog" | ./your_program.sh --color=always -E '(wolf|dog|horse)' | cat                                                                                         
+remote: [your_program] horse_wolf_dog
+remote: [tester::#EQ0] ✓ Received exit code 0.
+remote: [tester::#EQ0] ✓ Found line "horse_wolf_dog"
+remote: [tester::#EQ0] ✓ All matches in the line "horse_wolf_dog" are highlighted
+remote: [tester::#EQ0] $ echo -ne "strawberry" | ./your_program.sh --color=always -E '\d' | cat
+remote: [tester::#EQ0] ✓ Received exit code 1.
+remote: [tester::#EQ0] ✓ No output found
+remote: [tester::#EQ0] $ echo -ne "xxyyzz" | ./your_program.sh --color=always -E '\w\w' | cat
+remote: [your_program] xxyyzz
+remote: [tester::#EQ0] ✓ Received exit code 0.
+remote: [tester::#EQ0] ✓ Found line "xxyyzz"
+remote: [tester::#EQ0] ✓ All matches in the line "xxyyzz" are highlighted
+remote: [tester::#EQ0] $ echo -ne "$$##@@" | ./your_program.sh --color=always -E '\w' | cat
+remote: [tester::#EQ0] ✓ Received exit code 1.
+remote: [tester::#EQ0] ✓ No output found
+remote: [tester::#EQ0] $ echo -ne "I see 3 zucchinis. Also, I see 4 peas." | ./your_program.sh --color=always -E 'I see \d+ (pea|zucchini)s?' | cat                                                       
+remote: [your_program] I see 3 zucchinis. Also, I see 4 peas.
+remote: [tester::#EQ0] ✓ Received exit code 0.
+remote: [tester::#EQ0] ✓ Found line "I see 3 zucchinis. Also, I see 4 peas."
+remote: [tester::#EQ0] ✓ All matches in the line "I see 3 zucchinis. Also, I see 4 peas." are highlighted                                                                                                 
+remote: [tester::#EQ0] Test passed.
+remote: 
+remote: [tester::#BM2] Running tests for Stage #BM2 (Highlighting - Highlight a single match)
+remote: [tester::#BM2] $ echo -ne "only1digit" | ./your_program.sh --color=always -E '\d' | cat
+remote: [your_program] only1digit
+remote: [tester::#BM2] ✓ Received exit code 0.
+remote: [tester::#BM2] ✓ Found line "only1digit"
+remote: [tester::#BM2] ✓ All matches in the line "only1digit" are highlighted
+remote: [tester::#BM2] $ echo -ne "pineapple" | ./your_program.sh --color=always -E '\d' | cat
+remote: [tester::#BM2] ✓ Received exit code 1.
+remote: [tester::#BM2] ✓ No output found
+remote: [tester::#BM2] $ echo -ne "mango_suffix" | ./your_program.sh --color=always -E '^mango' | cat
+remote: [your_program] mango_suffix
+remote: [tester::#BM2] ✓ Received exit code 0.
+remote: [tester::#BM2] ✓ Found line "mango_suffix"
+remote: [tester::#BM2] ✓ All matches in the line "mango_suffix" are highlighted
+remote: [tester::#BM2] $ echo -ne "prefix_strawberry" | ./your_program.sh --color=always -E '^strawberry' | cat                                                                                           
+remote: [tester::#BM2] ✓ Received exit code 1.
+remote: [tester::#BM2] ✓ No output found
+remote: [tester::#BM2] $ echo -ne "caaaat" | ./your_program.sh --color=always -E 'ca+t' | cat
+remote: [your_program] caaaat
+remote: [tester::#BM2] ✓ Received exit code 0.
+remote: [tester::#BM2] ✓ Found line "caaaat"
+remote: [tester::#BM2] ✓ All matches in the line "caaaat" are highlighted
+remote: [tester::#BM2] $ echo -ne "I see 42 dogs" | ./your_program.sh --color=always -E '^I see \d+ (cat|dog)s?$' | cat                                                                                   
+remote: [your_program] I see 42 dogs
+remote: [tester::#BM2] ✓ Received exit code 0.
+remote: [tester::#BM2] ✓ Found line "I see 42 dogs"
+remote: [tester::#BM2] ✓ All matches in the line "I see 42 dogs" are highlighted
+remote: [tester::#BM2] Test passed.
+remote: 
+remote: [tester::#BO4] Running tests for Stage #BO4 (Multiple Matches - Process multiple input lines)
+remote: [tester::#BO4] $ echo -ne "a1b\nno digits here\n2c3d" | ./your_program.sh -o -E '\d'
+remote: [your_program] 1
+remote: [your_program] 2
+remote: [your_program] 3
+remote: [tester::#BO4] ✓ Received exit code 0.
+remote: [tester::#BO4] ✓ Found line "1"
+remote: [tester::#BO4] ✓ Found line "2"
+remote: [tester::#BO4] ✓ Found line "3"
+remote: [tester::#BO4] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#BO4] $ echo -ne "I like blueberry\nnothing here\nbanana and blueberry are tasty" | ./your_program.sh -o -E '(blueberry|banana)'                                                         
+remote: [your_program] blueberry
+remote: [your_program] banana
+remote: [your_program] blueberry
+remote: [tester::#BO4] ✓ Received exit code 0.
+remote: [tester::#BO4] ✓ Found line "blueberry"
+remote: [tester::#BO4] ✓ Found line "banana"
+remote: [tester::#BO4] ✓ Found line "blueberry"
+remote: [tester::#BO4] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#BO4] $ echo -ne "abc\ndef\nghi" | ./your_program.sh -o -E 'XYZ123'
+remote: [tester::#BO4] ✓ Received exit code 1.
+remote: [tester::#BO4] ✓ No output found
+remote: [tester::#BO4] $ echo -ne "dogdogdog\nelephant\ncat-cat-dog" | ./your_program.sh -o -E 'cat'
+remote: [your_program] cat
+remote: [your_program] cat
+remote: [tester::#BO4] ✓ Received exit code 0.
+remote: [tester::#BO4] ✓ Found line "cat"
+remote: [tester::#BO4] ✓ Found line "cat"
+remote: [tester::#BO4] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#BO4] $ echo -ne "Yesterday I saw 3 horse and I saw 45 fox.\nNothing interesting today.\nLast week I saw 12 foxs." | ./your_program.sh -o -E 'I saw \d+ (horse|fox)s?'                   
+remote: [your_program] I saw 3 horse
+remote: [your_program] I saw 45 fox
+remote: [your_program] I saw 12 foxs
+remote: [tester::#BO4] ✓ Received exit code 0.
+remote: [tester::#BO4] ✓ Found line "I saw 3 horse"
+remote: [tester::#BO4] ✓ Found line "I saw 45 fox"
+remote: [tester::#BO4] ✓ Found line "I saw 12 foxs"
+remote: [tester::#BO4] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#BO4] $ echo -ne "today is sunny\nno rains here\ntomorrow maybe rainy" | ./your_program.sh -o -E 'cats and dogs'                                                                         
+remote: [tester::#BO4] ✓ Received exit code 1.
+remote: [tester::#BO4] ✓ No output found
+remote: [tester::#BO4] Test passed.
+remote: 
+remote: [tester::#SS2] Running tests for Stage #SS2 (Multiple Matches - Print multiple matches)
+remote: [tester::#SS2] $ echo -ne "a1b2c3" | ./your_program.sh -o -E '\d'
+remote: [your_program] 1
+remote: [your_program] 2
+remote: [your_program] 3
+remote: [tester::#SS2] ✓ Received exit code 0.
+remote: [tester::#SS2] ✓ Found line "1"
+remote: [tester::#SS2] ✓ Found line "2"
+remote: [tester::#SS2] ✓ Found line "3"
+remote: [tester::#SS2] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#SS2] $ echo -ne "blackberry_apple_grape" | ./your_program.sh -o -E '(grape|apple|blackberry)'                                                                                           
+remote: [your_program] blackberry
+remote: [your_program] apple
+remote: [your_program] grape
+remote: [tester::#SS2] ✓ Received exit code 0.
+remote: [tester::#SS2] ✓ Found line "blackberry"
+remote: [tester::#SS2] ✓ Found line "apple"
+remote: [tester::#SS2] ✓ Found line "grape"
+remote: [tester::#SS2] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#SS2] $ echo -ne "cherry" | ./your_program.sh -o -E '\d'
+remote: [tester::#SS2] ✓ Received exit code 1.
+remote: [tester::#SS2] ✓ No output found
+remote: [tester::#SS2] $ echo -ne "xx, yy, zz" | ./your_program.sh -o -E '\w\w'
+remote: [your_program] xx
+remote: [your_program] yy
+remote: [your_program] zz
+remote: [tester::#SS2] ✓ Received exit code 0.
+remote: [tester::#SS2] ✓ Found line "xx"
+remote: [tester::#SS2] ✓ Found line "yy"
+remote: [tester::#SS2] ✓ Found line "zz"
+remote: [tester::#SS2] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#SS2] $ echo -ne "##$$%" | ./your_program.sh -o -E '\w'
+remote: [tester::#SS2] ✓ Received exit code 1.
+remote: [tester::#SS2] ✓ No output found
+remote: [tester::#SS2] $ echo -ne "I see 3 horses. Also, I see 4 rabbits." | ./your_program.sh -o -E 'I see \d+ (horse|rabbit)s?'                                                                         
+remote: [your_program] I see 3 horses
+remote: [your_program] I see 4 rabbits
+remote: [tester::#SS2] ✓ Received exit code 0.
+remote: [tester::#SS2] ✓ Found line "I see 3 horses"
+remote: [tester::#SS2] ✓ Found line "I see 4 rabbits"
+remote: [tester::#SS2] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#SS2] Test passed.
+remote: 
+remote: [tester::#CJ0] Running tests for Stage #CJ0 (Multiple Matches - Print single match)
+remote: [tester::#CJ0] $ echo -ne "only1digit" | ./your_program.sh -o -E '\d'
+remote: [your_program] 1
+remote: [tester::#CJ0] ✓ Received exit code 0.
+remote: [tester::#CJ0] ✓ Found line "1"
+remote: [tester::#CJ0] $ echo -ne "cherry" | ./your_program.sh -o -E '\d'
+remote: [tester::#CJ0] ✓ Received exit code 1.
+remote: [tester::#CJ0] ✓ No output found
+remote: [tester::#CJ0] $ echo -ne "blueberry_suffix" | ./your_program.sh -o -E '^blueberry'
+remote: [your_program] blueberry
+remote: [tester::#CJ0] ✓ Received exit code 0.
+remote: [tester::#CJ0] ✓ Found line "blueberry"
+remote: [tester::#CJ0] $ echo -ne "prefix_blueberry" | ./your_program.sh -o -E '^blueberry'
+remote: [tester::#CJ0] ✓ Received exit code 1.
+remote: [tester::#CJ0] ✓ No output found
+remote: [tester::#CJ0] $ echo -ne "cat" | ./your_program.sh -o -E 'ca?t'
+remote: [your_program] cat
+remote: [tester::#CJ0] ✓ Received exit code 0.
+remote: [tester::#CJ0] ✓ Found line "cat"
+remote: [tester::#CJ0] $ echo -ne "I see 42 dogs" | ./your_program.sh -o -E '^I see \d+ (cat|dog)s?$'
+remote: [your_program] I see 42 dogs
+remote: [tester::#CJ0] ✓ Received exit code 0.
+remote: [tester::#CJ0] ✓ Found line "I see 42 dogs"
+remote: [tester::#CJ0] Test passed.
+remote: 
+remote: [tester::#PZ6] Running tests for Stage #PZ6 (Printing Matches - Print multiple matching lines)                                                                                                    
+remote: [tester::#PZ6] $ echo -ne "apple\nbanana123\ncherry\ndog456\nelephant" | ./your_program.sh -E '\d'                                                                                                
+remote: [your_program] banana123
+remote: [your_program] dog456
+remote: [tester::#PZ6] ✓ Received exit code 0.
+remote: [tester::#PZ6] ✓ Found line "banana123"
+remote: [tester::#PZ6] ✓ Found line "dog456"
+remote: [tester::#PZ6] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#PZ6] $ echo -ne "apple\nbanana\ncherry\ndog" | ./your_program.sh -E '\d'
+remote: [tester::#PZ6] ✓ Received exit code 1.
+remote: [tester::#PZ6] ✓ No output found
+remote: [tester::#PZ6] $ echo -ne "pear\n!@#$\ngrape\n+++\ntest123" | ./your_program.sh -E '\w+'
+remote: [your_program] pear
+remote: [your_program] grape
+remote: [your_program] test123
+remote: [tester::#PZ6] ✓ Received exit code 0.
+remote: [tester::#PZ6] ✓ Found line "pear"
+remote: [tester::#PZ6] ✓ Found line "grape"
+remote: [tester::#PZ6] ✓ Found line "test123"
+remote: [tester::#PZ6] ✓ Stdout contains 3 expected lines in order
+remote: [tester::#PZ6] $ echo -ne "france\npanda\nitaly\ndog\nspain" | ./your_program.sh -E '(panda|dog)'                                                                                                
+remote: [your_program] panda
+remote: [your_program] dog
+remote: [tester::#PZ6] ✓ Received exit code 0.
+remote: [tester::#PZ6] ✓ Found line "panda"
+remote: [tester::#PZ6] ✓ Found line "dog"
+remote: [tester::#PZ6] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#PZ6] $ echo -ne "New York\nWashington D.C.\nAustin\nLos Angeles" | ./your_program.sh -E '(panda|dog)'                                                                                   
+remote: [tester::#PZ6] ✓ Received exit code 1.
+remote: [tester::#PZ6] ✓ No output found
+remote: [tester::#PZ6] $ echo -ne "LOG 10 banana\nINVALID\nLOG 20 zucchini\nLOG 30 invalid" | ./your_program.sh -E '^LOG \d+ (banana|zucchini)$'                                                          
+remote: [your_program] LOG 10 banana
+remote: [your_program] LOG 20 zucchini
+remote: [tester::#PZ6] ✓ Received exit code 0.
+remote: [tester::#PZ6] ✓ Found line "LOG 10 banana"
+remote: [tester::#PZ6] ✓ Found line "LOG 20 zucchini"
+remote: [tester::#PZ6] ✓ Stdout contains 2 expected lines in order
+remote: [tester::#PZ6] Test passed.
+remote: 
+remote: [tester::#KU5] Running tests for Stage #KU5 (Printing Matches - Print a single matching line)
+remote: [tester::#KU5] $ echo -ne "banana123" | ./your_program.sh -E '\d'
+remote: [your_program] banana123
+remote: [tester::#KU5] ✓ Received exit code 0.
+remote: [tester::#KU5] ✓ Found line "banana123"
+remote: [tester::#KU5] $ echo -ne "cherry" | ./your_program.sh -E '\d'
+remote: [tester::#KU5] ✓ Received exit code 1.
+remote: [tester::#KU5] ✓ No output found
+remote: [tester::#KU5] $ echo -ne "grape_suffix" | ./your_program.sh -E '^grape'
+remote: [your_program] grape_suffix
+remote: [tester::#KU5] ✓ Received exit code 0.
+remote: [tester::#KU5] ✓ Found line "grape_suffix"
+remote: [tester::#KU5] $ echo -ne "prefix_grape" | ./your_program.sh -E '^grape'
+remote: [tester::#KU5] ✓ Received exit code 1.
+remote: [tester::#KU5] ✓ No output found
+remote: [tester::#KU5] $ echo -ne "cat" | ./your_program.sh -E 'ca+t'
+remote: [your_program] cat
+remote: [tester::#KU5] ✓ Received exit code 0.
+remote: [tester::#KU5] ✓ Found line "cat"
+remote: [tester::#KU5] $ echo -ne "atest" | ./your_program.sh -E '[apple]'
+remote: [your_program] atest
+remote: [tester::#KU5] ✓ Received exit code 0.
+remote: [tester::#KU5] ✓ Found line "atest"
+remote: [tester::#KU5] Test passed.
+remote: 
+remote: [tester::#ZM7] Running tests for Stage #ZM7 (Alternation)
+remote: [tester::#ZM7] $ echo -n 'a cat' | ./your_program.sh -E 'a (cat|dog)'
+remote: [your_program] a cat
+remote: [tester::#ZM7] ✓ Received exit code 0.
+remote: [tester::#ZM7] $ echo -n 'a cog' | ./your_program.sh -E 'a (cat|dog)'
+remote: [tester::#ZM7] ✓ Received exit code 1.
+remote: [tester::#ZM7] $ echo -n 'I see 1 cat' | ./your_program.sh -E '^I see \d+ (cat|dog)s?$'
+remote: [your_program] I see 1 cat
+remote: [tester::#ZM7] ✓ Received exit code 0.
+remote: [tester::#ZM7] $ echo -n 'I see 42 dogs' | ./your_program.sh -E '^I see \d+ (cat|dog)s?$'
+remote: [your_program] I see 42 dogs
+remote: [tester::#ZM7] ✓ Received exit code 0.
+remote: [tester::#ZM7] $ echo -n 'I see a cat' | ./your_program.sh -E '^I see \d+ (cat|dog)s?$'
+remote: [tester::#ZM7] ✓ Received exit code 1.
+remote: [tester::#ZM7] $ echo -n 'I see 2 dog3' | ./your_program.sh -E '^I see \d+ (cat|dog)s?$'
+remote: [tester::#ZM7] ✓ Received exit code 1.
+remote: [tester::#ZM7] Test passed.
+remote: 
+remote: [tester::#ZB3] Running tests for Stage #ZB3 (Wildcard)
+remote: [tester::#ZB3] $ echo -n 'cat' | ./your_program.sh -E 'c.t'
+remote: [your_program] cat
+remote: [tester::#ZB3] ✓ Received exit code 0.
+remote: [tester::#ZB3] $ echo -n 'car' | ./your_program.sh -E 'c.t'
+remote: [tester::#ZB3] ✓ Received exit code 1.
+remote: [tester::#ZB3] $ echo -n 'goøö0Ogol' | ./your_program.sh -E 'g.+gol'
+remote: [your_program] goøö0Ogol
+remote: [tester::#ZB3] ✓ Received exit code 0.
+remote: [tester::#ZB3] $ echo -n 'gol' | ./your_program.sh -E 'g.+gol'
+remote: [tester::#ZB3] ✓ Received exit code 1.
+remote: [tester::#ZB3] Test passed.
+remote: 
+remote: [tester::#NY8] Running tests for Stage #NY8 (Match zero or one times)
+remote: [tester::#NY8] $ echo -n 'cat' | ./your_program.sh -E 'ca?t'
+remote: [your_program] cat
+remote: [tester::#NY8] ✓ Received exit code 0.
+remote: [tester::#NY8] $ echo -n 'act' | ./your_program.sh -E 'ca?t'
+remote: [your_program] act
+remote: [tester::#NY8] ✓ Received exit code 0.
+remote: [tester::#NY8] $ echo -n 'cat' | ./your_program.sh -E 'ca?a?t'
+remote: [your_program] cat
+remote: [tester::#NY8] ✓ Received exit code 0.
+remote: [tester::#NY8] $ echo -n 'caat' | ./your_program.sh -E 'ca?t'
+remote: [tester::#NY8] ✓ Received exit code 1.
+remote: [tester::#NY8] $ echo -n 'cag' | ./your_program.sh -E 'ca?t'
+remote: [tester::#NY8] ✓ Received exit code 1.
+remote: [tester::#NY8] Test passed.
+remote: 
+remote: [tester::#FZ7] Running tests for Stage #FZ7 (Match one or more times)
+remote: [tester::#FZ7] $ echo -n 'cat' | ./your_program.sh -E 'ca+t'
+remote: [your_program] cat
+remote: [tester::#FZ7] ✓ Received exit code 0.
+remote: [tester::#FZ7] $ echo -n 'caaats' | ./your_program.sh -E 'ca+at'
+remote: [your_program] caaats
+remote: [tester::#FZ7] ✓ Received exit code 0.
+remote: [tester::#FZ7] $ echo -n 'act' | ./your_program.sh -E 'ca+t'
+remote: [tester::#FZ7] ✓ Received exit code 1.
+remote: [tester::#FZ7] $ echo -n 'ca' | ./your_program.sh -E 'ca+t'
+remote: [tester::#FZ7] ✓ Received exit code 1.
+remote: [tester::#FZ7] $ echo -n 'abc_123_xyz' | ./your_program.sh -E '^abc_\d+_xyz$'
+remote: [your_program] abc_123_xyz
+remote: [tester::#FZ7] ✓ Received exit code 0.
+remote: [tester::#FZ7] $ echo -n 'abc_rst_xyz' | ./your_program.sh -E '^abc_\d+_xyz$'
+remote: [tester::#FZ7] ✓ Received exit code 1.
+remote: [tester::#FZ7] Test passed.
+remote: 
+remote: [tester::#AO7] Running tests for Stage #AO7 (End of string anchor)
+remote: [tester::#AO7] $ echo -n 'orange_grape' | ./your_program.sh -E 'grape$'
+remote: [your_program] orange_grape
+remote: [tester::#AO7] ✓ Received exit code 0.
+remote: [tester::#AO7] $ echo -n 'grape_orange' | ./your_program.sh -E 'grape$'
+remote: [tester::#AO7] ✓ Received exit code 1.
+remote: [tester::#AO7] $ echo -n 'mango' | ./your_program.sh -E '^mango$'
+remote: [your_program] mango
+remote: [tester::#AO7] ✓ Received exit code 0.
+remote: [tester::#AO7] $ echo -n 'mango_mango' | ./your_program.sh -E '^mango$'
+remote: [tester::#AO7] ✓ Received exit code 1.
+remote: [tester::#AO7] Test passed.
+remote: 
+remote: [tester::#RR8] Running tests for Stage #RR8 (Start of string anchor)
+remote: [tester::#RR8] $ echo -n 'mango_pear' | ./your_program.sh -E '^mango'
+remote: [your_program] mango_pear
+remote: [tester::#RR8] ✓ Received exit code 0.
+remote: [tester::#RR8] $ echo -n 'pear_mango' | ./your_program.sh -E '^mango'
+remote: [tester::#RR8] ✓ Received exit code 1.
+remote: [tester::#RR8] Test passed.
+remote: 
+remote: [tester::#SH9] Running tests for Stage #SH9 (Combining Character Classes)
+remote: [tester::#SH9] $ echo -n 'sally has 3 apples' | ./your_program.sh -E '\d apple'
+remote: [your_program] sally has 3 apples
+remote: [tester::#SH9] ✓ Received exit code 0.
+remote: [tester::#SH9] $ echo -n 'sally has 1 orange' | ./your_program.sh -E '\d apple'
+remote: [tester::#SH9] ✓ Received exit code 1.
+remote: [tester::#SH9] $ echo -n 'sally has 124 apples' | ./your_program.sh -E '\d\d\d apples'
+remote: [your_program] sally has 124 apples
+remote: [tester::#SH9] ✓ Received exit code 0.
+remote: [tester::#SH9] $ echo -n 'sally has 12 apples' | ./your_program.sh -E '\d\\d\\d apples'
+remote: [tester::#SH9] ✓ Received exit code 1.
+remote: [tester::#SH9] $ echo -n 'sally has 3 dogs' | ./your_program.sh -E '\d \w\w\ws'
+remote: [your_program] sally has 3 dogs
+remote: [tester::#SH9] ✓ Received exit code 0.
+remote: [tester::#SH9] $ echo -n 'sally has 4 dogs' | ./your_program.sh -E '\d \w\w\ws'
+remote: [your_program] sally has 4 dogs
+remote: [tester::#SH9] ✓ Received exit code 0.
+remote: [tester::#SH9] $ echo -n 'sally has 1 dog' | ./your_program.sh -E '\d \w\w\ws'
+remote: [tester::#SH9] ✓ Received exit code 1.
+remote: [tester::#SH9] Test passed.
+remote: 
+remote: [tester::#RK3] Running tests for Stage #RK3 (Negative Character Groups)
+remote: [tester::#RK3] $ echo -n 'apple' | ./your_program.sh -E '[^xyz]'
+remote: [your_program] apple
+remote: [tester::#RK3] ✓ Received exit code 0.
+remote: [tester::#RK3] $ echo -n 'apple' | ./your_program.sh -E '[^abc]'
+remote: [your_program] apple
+remote: [tester::#RK3] ✓ Received exit code 0.
+remote: [tester::#RK3] $ echo -n 'banana' | ./your_program.sh -E '[^anb]'
+remote: [tester::#RK3] ✓ Received exit code 1.
+remote: [tester::#RK3] $ echo -n 'orange' | ./your_program.sh -E '[^opq]'
+remote: [your_program] orange
+remote: [tester::#RK3] ✓ Received exit code 0.
+remote: [tester::#RK3] Test passed.
+remote: 
+remote: [tester::#TL6] Running tests for Stage #TL6 (Positive Character Groups)
+remote: [tester::#TL6] $ echo -n 'a' | ./your_program.sh -E '[banana]'
+remote: [your_program] a
+remote: [tester::#TL6] ✓ Received exit code 0.
+remote: [tester::#TL6] $ echo -n 'acd' | ./your_program.sh -E '[banana]'
+remote: [your_program] acd
+remote: [tester::#TL6] ✓ Received exit code 0.
+remote: [tester::#TL6] $ echo -n 'orange' | ./your_program.sh -E '[bcdfhi]'
+remote: [tester::#TL6] ✓ Received exit code 1.
+remote: [tester::#TL6] $ echo -n '[]' | ./your_program.sh -E '[grape]'
+remote: [tester::#TL6] ✓ Received exit code 1.
+remote: [tester::#TL6] Test passed.
+remote: 
+remote: [tester::#MR9] Running tests for Stage #MR9 (Match word characters)
+remote: [tester::#MR9] $ echo -n 'grape' | ./your_program.sh -E '\w'
+remote: [your_program] grape
+remote: [tester::#MR9] ✓ Received exit code 0.
+remote: [tester::#MR9] $ echo -n 'APPLE' | ./your_program.sh -E '\w'
+remote: [your_program] APPLE
+remote: [tester::#MR9] ✓ Received exit code 0.
+remote: [tester::#MR9] $ echo -n '583' | ./your_program.sh -E '\w'
+remote: [your_program] 583
+remote: [tester::#MR9] ✓ Received exit code 0.
+remote: [tester::#MR9] $ echo -n '=-÷_×=+' | ./your_program.sh -E '\w'
+remote: [your_program] =-÷_×=+
+remote: [tester::#MR9] ✓ Received exit code 0.
+remote: [tester::#MR9] $ echo -n '÷-#=×%' | ./your_program.sh -E '\w'
+remote: [tester::#MR9] ✓ Received exit code 1.
+remote: [tester::#MR9] Test passed.
+remote: 
+remote: [tester::#OQ2] Running tests for Stage #OQ2 (Match digits)
+remote: [tester::#OQ2] $ echo -n '123' | ./your_program.sh -E '\d'
+remote: [your_program] 123
+remote: [tester::#OQ2] ✓ Received exit code 0.
+remote: [tester::#OQ2] $ echo -n 'apple' | ./your_program.sh -E '\d'
+remote: [tester::#OQ2] ✓ Received exit code 1.
+remote: [tester::#OQ2] $ echo -n 'abc_0_xyz' | ./your_program.sh -E '\d'
+remote: [your_program] abc_0_xyz
+remote: [tester::#OQ2] ✓ Received exit code 0.
+remote: [tester::#OQ2] Test passed.
+remote: 
+remote: [tester::#CQ2] Running tests for Stage #CQ2 (Match a literal character)
+remote: [tester::#CQ2] $ echo -n 'dog' | ./your_program.sh -E 'd'
+remote: [your_program] dog
+remote: [tester::#CQ2] ✓ Received exit code 0.
+remote: [tester::#CQ2] $ echo -n 'dog' | ./your_program.sh -E 'f'
+remote: [tester::#CQ2] ✓ Received exit code 1.
+remote: [tester::#CQ2] Test passed.
+remote: 
+remote: Test passed. Congrats!
+remote: 
+remote: Mark step as complete: https://app.codecrafters.io/courses/grep
+remote: 
+To https://git.codecrafters.io/11e6742278d10a06
+   8e2ca46..4277f4f  master -> master

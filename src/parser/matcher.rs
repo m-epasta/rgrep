@@ -1,5 +1,5 @@
-use crate::parser::types::Token;
 use crate::core::Config;
+use crate::parser::types::Token;
 
 /// Recursive function similar to matches_from, but returns the length of the match if successful
 pub fn matches_from_range(
@@ -601,13 +601,25 @@ fn collect_all_match_lengths(
     match token {
         Token::StartAnchor => {
             if input_index == 0 {
-                return collect_all_match_lengths(input, &tokens[1..], input_index, config, captures);
+                return collect_all_match_lengths(
+                    input,
+                    &tokens[1..],
+                    input_index,
+                    config,
+                    captures,
+                );
             }
             return vec![];
         }
         Token::EndAnchor => {
             if input_index == input.len() {
-                return collect_all_match_lengths(input, &tokens[1..], input_index, config, captures);
+                return collect_all_match_lengths(
+                    input,
+                    &tokens[1..],
+                    input_index,
+                    config,
+                    captures,
+                );
             }
             return vec![];
         }
@@ -629,14 +641,17 @@ fn collect_all_match_lengths(
             ) {
                 current_pos += len;
                 positions.push(current_pos);
-                if matches!(quant, crate::parser::types::Quantifiers::ZeroOrOne) && positions.len() > 1 {
+                if matches!(quant, crate::parser::types::Quantifiers::ZeroOrOne)
+                    && positions.len() > 1
+                {
                     break; // ? matches at most once
                 }
             }
 
             // For each position where quantifier can stop, collect lengths for remaining tokens
             for pos in positions {
-                let rest_lengths = collect_all_match_lengths(input, &tokens[1..], pos, config, captures);
+                let rest_lengths =
+                    collect_all_match_lengths(input, &tokens[1..], pos, config, captures);
                 for rest_len in rest_lengths {
                     result.push((pos - input_index) + rest_len);
                 }
@@ -654,19 +669,33 @@ fn collect_all_match_lengths(
         Token::CaptureGroup(group_num, inner_tokens) => {
             let group_num = *group_num;
             // Collect all possible lengths for inner tokens
-            let inner_lengths = collect_all_match_lengths(input, inner_tokens, input_index, config, captures);
+            let inner_lengths =
+                collect_all_match_lengths(input, inner_tokens, input_index, config, captures);
             for inner_len in inner_lengths {
                 let mut temp_captures = captures.clone();
-                let matched_str: String = input[input_index..input_index + inner_len].iter().collect();
+                let matched_str: String =
+                    input[input_index..input_index + inner_len].iter().collect();
                 if group_num > temp_captures.len() {
                     temp_captures.resize(group_num, None);
                 }
                 temp_captures[group_num - 1] = Some(matched_str);
                 // Populate nested captures by running dummy inner match
                 let mut dummy_captures = temp_captures.clone();
-                let _ = matches_from_range(input, inner_tokens, input_index, config, &mut dummy_captures);
+                let _ = matches_from_range(
+                    input,
+                    inner_tokens,
+                    input_index,
+                    config,
+                    &mut dummy_captures,
+                );
                 temp_captures = dummy_captures;
-                let rest_lengths = collect_all_match_lengths(input, &tokens[1..], input_index + inner_len, config, &temp_captures);
+                let rest_lengths = collect_all_match_lengths(
+                    input,
+                    &tokens[1..],
+                    input_index + inner_len,
+                    config,
+                    &temp_captures,
+                );
                 for rest_len in rest_lengths {
                     result.push(inner_len + rest_len);
                 }
@@ -676,9 +705,17 @@ fn collect_all_match_lengths(
             let n = *n;
             if let Some(Some(captured)) = captures.get(n - 1) {
                 let captured_chars: Vec<char> = captured.chars().collect();
-                if input_index + captured_chars.len() <= input.len() && input[input_index..input_index + captured_chars.len()] == captured_chars {
+                if input_index + captured_chars.len() <= input.len()
+                    && input[input_index..input_index + captured_chars.len()] == captured_chars
+                {
                     let len = captured_chars.len();
-                    let rest_lengths = collect_all_match_lengths(input, &tokens[1..], input_index + len, config, captures);
+                    let rest_lengths = collect_all_match_lengths(
+                        input,
+                        &tokens[1..],
+                        input_index + len,
+                        config,
+                        captures,
+                    );
                     for rest_len in rest_lengths {
                         result.push(len + rest_len);
                     }
@@ -769,7 +806,8 @@ fn collect_all_match_lengths(
                 }
 
                 for pos in positions {
-                    let rest_lengths = collect_all_match_lengths(input, &tokens[1..], pos, config, captures);
+                    let rest_lengths =
+                        collect_all_match_lengths(input, &tokens[1..], pos, config, captures);
                     for rest_len in rest_lengths {
                         result.push((pos - input_index) + rest_len);
                     }
@@ -782,8 +820,13 @@ fn collect_all_match_lengths(
                 return vec![];
             }
             if single_matches(&input[input_index..], token) {
-                let rest_lengths =
-                    collect_all_match_lengths(input, &tokens[1..], input_index + 1, config, captures);
+                let rest_lengths = collect_all_match_lengths(
+                    input,
+                    &tokens[1..],
+                    input_index + 1,
+                    config,
+                    captures,
+                );
                 for rest_len in rest_lengths {
                     result.push(1 + rest_len);
                 }

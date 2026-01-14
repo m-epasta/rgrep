@@ -7,7 +7,10 @@ mod parser;
 
 fn parse_args(args: &[String]) -> Result<core::Config, String> {
     if args.len() < 2 {
-        return Err(format!("Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]", args[0]));
+        return Err(format!(
+            "Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]",
+            args[0]
+        ));
     }
 
     let mut only_matching = false;
@@ -57,7 +60,10 @@ fn parse_args(args: &[String]) -> Result<core::Config, String> {
             }
             "-E" => {
                 if i + 1 >= args.len() {
-                    return Err(format!("Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]", args[0]));
+                    return Err(format!(
+                        "Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]",
+                        args[0]
+                    ));
                 }
                 pattern = args[i + 1].clone();
                 i += 2;
@@ -69,13 +75,19 @@ fn parse_args(args: &[String]) -> Result<core::Config, String> {
                 break;
             }
             _ => {
-                return Err(format!("Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]", args[0]));
+                return Err(format!(
+                    "Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]",
+                    args[0]
+                ));
             }
         }
     }
 
     if pattern.is_empty() {
-        return Err(format!("Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]", args[0]));
+        return Err(format!(
+            "Usage: {} [--color[=WHEN]] [-r] [-o [-P]] -E <pattern> [file...]",
+            args[0]
+        ));
     }
 
     Ok(core::Config {
@@ -102,7 +114,11 @@ fn process_files(config: &core::Config) -> Result<bool, Box<dyn std::error::Erro
 
     for filename in &file_paths {
         let content = std::fs::read_to_string(filename)?;
-        let filename_opt = if should_prefix { Some(filename.as_str()) } else { None };
+        let filename_opt = if should_prefix {
+            Some(filename.as_str())
+        } else {
+            None
+        };
 
         if core::search_file(&content, config, filename_opt) {
             matched_any = true;
@@ -121,7 +137,7 @@ fn main() {
             eprintln!("{}", err);
             process::exit(1);
         }
-    }; 
+    };
 
     let matched_any = if config.filenames.is_empty() {
         process_stdin(&config).unwrap_or(false)

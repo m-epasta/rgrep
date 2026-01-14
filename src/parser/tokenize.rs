@@ -1,4 +1,4 @@
-use crate::parser::types::{Token, Quantifiers};
+use crate::parser::types::{Quantifiers, Token};
 
 pub fn tokenize(pattern: &str) -> Vec<Token> {
     let mut tokens = Vec::new();

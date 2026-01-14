@@ -89,10 +89,12 @@ fn collect_from_dir(dir: &Path, files: &mut Vec<String>) {
                 files.push(path.to_string_lossy().to_string());
             } else if path.is_dir() {
                 // Skip hidden directories like .git
-                if !path.file_name()
+                if !path
+                    .file_name()
                     .and_then(|n| n.to_str())
                     .map(|s| s.starts_with('.'))
-                    .unwrap_or(false) {
+                    .unwrap_or(false)
+                {
                     collect_from_dir(&path, files);
                 }
             }
@@ -127,11 +129,17 @@ pub fn search_file(content: &str, config: &Config, filename: Option<&str>) -> bo
 
 fn match_pattern(input: &str, pattern: &str, config: &Config) -> bool {
     reset_iteration_count();
-    debug_log(Some(config), &format!("Matching pattern '{}' against input '{}'", pattern, input));
+    debug_log(
+        Some(config),
+        &format!("Matching pattern '{}' against input '{}'", pattern, input),
+    );
     let mut tokens = crate::parser::token::tokenize(pattern);
     let mut group_counter = 1;
     crate::parser::token::assign_group_numbers(&mut tokens, &mut group_counter);
-    debug_log(Some(config), &format!("Tokens after group assignment: {:?}", tokens));
+    debug_log(
+        Some(config),
+        &format!("Tokens after group assignment: {:?}", tokens),
+    );
     let result = crate::parser::token::match_tokens(input, &tokens, config);
     debug_log(Some(config), &format!("Match result: {}", result));
     result
@@ -142,7 +150,10 @@ fn highlight_matches_in_line(input_line: &str, pattern: &str) -> String {
     let mut group_counter = 1;
     crate::parser::token::assign_group_numbers(&mut tokens, &mut group_counter);
     let input_chars: Vec<char> = input_line.chars().collect();
-    let has_start = matches!(tokens.first(), Some(crate::parser::token::Token::StartAnchor));
+    let has_start = matches!(
+        tokens.first(),
+        Some(crate::parser::token::Token::StartAnchor)
+    );
     let has_end = matches!(tokens.last(), Some(crate::parser::token::Token::EndAnchor));
     let mut pos = 0;
     let mut result = String::new();
@@ -151,7 +162,13 @@ fn highlight_matches_in_line(input_line: &str, pattern: &str) -> String {
             break;
         }
         let mut dummy_captures = Vec::new();
-        if let Some(match_len) = crate::parser::token::matches_from_range(&input_chars, &tokens, pos, None, &mut dummy_captures) {
+        if let Some(match_len) = crate::parser::token::matches_from_range(
+            &input_chars,
+            &tokens,
+            pos,
+            None,
+            &mut dummy_captures,
+        ) {
             let match_end = pos + match_len;
             if has_end && match_end != input_chars.len() {
                 // No match, add the current char and continue
@@ -162,7 +179,12 @@ fn highlight_matches_in_line(input_line: &str, pattern: &str) -> String {
             // Add the matched part with color
             let start_byte = char_to_byte(input_line, pos);
             let end_byte = char_to_byte(input_line, match_end);
-            result.push_str(&format!("{}{}{}", RED, &input_line[start_byte..end_byte], RESET));
+            result.push_str(&format!(
+                "{}{}{}",
+                RED,
+                &input_line[start_byte..end_byte],
+                RESET
+            ));
             pos = match_end;
         } else {
             // No match, add the current char
@@ -178,7 +200,13 @@ fn highlight_matches_in_line(input_line: &str, pattern: &str) -> String {
     result
 }
 
-pub fn check_pattern(input_line: &str, pattern: &str, is_colored: bool, filename: Option<&str>, config: &Config) -> bool {
+pub fn check_pattern(
+    input_line: &str,
+    pattern: &str,
+    is_colored: bool,
+    filename: Option<&str>,
+    config: &Config,
+) -> bool {
     if match_pattern(&input_line, &pattern, config) {
         let output = if is_colored {
             highlight_matches_in_line(input_line, pattern)
@@ -196,17 +224,24 @@ pub fn check_pattern(input_line: &str, pattern: &str, is_colored: bool, filename
     }
 }
 
-
 fn char_to_byte(s: &str, char_index: usize) -> usize {
     s.chars().take(char_index).map(|c| c.len_utf8()).sum()
 }
 
-pub fn check_only_matching_patterns(input_line: &str, pattern: &str, is_colored: bool, filename: Option<&str>) -> bool {
+pub fn check_only_matching_patterns(
+    input_line: &str,
+    pattern: &str,
+    is_colored: bool,
+    filename: Option<&str>,
+) -> bool {
     let mut tokens = crate::parser::token::tokenize(pattern);
     let mut group_counter = 1;
     crate::parser::token::assign_group_numbers(&mut tokens, &mut group_counter);
     let input_chars: Vec<char> = input_line.chars().collect();
-    let has_start = matches!(tokens.first(), Some(crate::parser::token::Token::StartAnchor));
+    let has_start = matches!(
+        tokens.first(),
+        Some(crate::parser::token::Token::StartAnchor)
+    );
     let has_end = matches!(tokens.last(), Some(crate::parser::token::Token::EndAnchor));
     let mut pos = 0;
     let mut found = false;
@@ -215,7 +250,13 @@ pub fn check_only_matching_patterns(input_line: &str, pattern: &str, is_colored:
             break;
         }
         let mut dummy_captures = Vec::new();
-        if let Some(match_len) = crate::parser::token::matches_from_range(&input_chars, &tokens, pos, None, &mut dummy_captures) {
+        if let Some(match_len) = crate::parser::token::matches_from_range(
+            &input_chars,
+            &tokens,
+            pos,
+            None,
+            &mut dummy_captures,
+        ) {
             let match_end = pos + match_len;
             if has_end && match_end != input_chars.len() {
                 pos += 1;
@@ -242,12 +283,20 @@ pub fn check_only_matching_patterns(input_line: &str, pattern: &str, is_colored:
     found
 }
 
-pub fn check_multiples_matching_patterns(line: &str, pattern: &str, is_colored: bool, filename: Option<&str>) -> bool {
+pub fn check_multiples_matching_patterns(
+    line: &str,
+    pattern: &str,
+    is_colored: bool,
+    filename: Option<&str>,
+) -> bool {
     let mut tokens = crate::parser::token::tokenize(pattern);
     let mut group_counter = 1;
     crate::parser::token::assign_group_numbers(&mut tokens, &mut group_counter);
     let input_chars: Vec<char> = line.chars().collect();
-    let has_start = matches!(tokens.first(), Some(crate::parser::token::Token::StartAnchor));
+    let has_start = matches!(
+        tokens.first(),
+        Some(crate::parser::token::Token::StartAnchor)
+    );
     let has_end = matches!(tokens.last(), Some(crate::parser::token::Token::EndAnchor));
     let mut pos = 0;
     let mut found = false;
@@ -256,7 +305,13 @@ pub fn check_multiples_matching_patterns(line: &str, pattern: &str, is_colored: 
             break;
         }
         let mut dummy_captures = Vec::new();
-        if let Some(match_len) = crate::parser::token::matches_from_range(&input_chars, &tokens, pos, None, &mut dummy_captures) {
+        if let Some(match_len) = crate::parser::token::matches_from_range(
+            &input_chars,
+            &tokens,
+            pos,
+            None,
+            &mut dummy_captures,
+        ) {
             let match_end = pos + match_len;
             if has_end && match_end != input_chars.len() {
                 pos += 1;

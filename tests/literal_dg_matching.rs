@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use rgrep::*;
+    use rsgrep::*;
 
     #[test]
     fn match_single_literal_ch() {

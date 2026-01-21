@@ -1,11 +1,11 @@
 [package]
-name = "rgrep"
+name = "rsgrep"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
 anyhow = "1.0.68"                                # error handling
-atty = "0.2.14"                                  # detect tty
+atty = "0.2.13"                                  # detect tty
 bytes = "1.3.0"                                  # helps manage buffers
 thiserror = "1.0.38"                             # error handling
 

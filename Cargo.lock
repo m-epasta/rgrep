@@ -59,7 +59,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rgrep"
+name = "rsgrep"
 version = "0.1.0"
 dependencies = [
  "anyhow",
